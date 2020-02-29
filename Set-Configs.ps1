@@ -1,8 +1,5 @@
 [CmdletBinding()]
 Param (
-    [Parameter(Mandatory=$False)]
-    [string]$ServerInstance,
-
     [Parameter(Mandatory=$True)]
     [string]$ServiceBusConnectionString,
 
@@ -10,7 +7,7 @@ Param (
     [string]$SignalRConnectionString,
 
     [Parameter(Mandatory=$False)]
-    [string]$StorageConnectionString,
+    [string]$StorageConnectionString = "UseDevelopmentStorage=true",
 
     [Parameter(Mandatory=$False)]
     [string]$ServerApplicationInsightsInstrumentationKey,
@@ -24,15 +21,7 @@ Param (
 
 $ErrorActionPreference = "Stop";
 
-If (!$ServerInstance) {
-    $ServerInstance = "localhost";
-}
-
-If (!$StorageConnectionString) {
-    $StorageConnectionString = "UseDevelopmentStorage=true"
-}
-
-$DatabaseConnectionString = ./Database/Format-DatabaseConnectionString.ps1 -ServerInstance $ServerInstance;
+$DatabaseConnectionString = ./Database/Get-DatabaseConnectionString.ps1;
 $AudioConversionQueueName = "audioconversion";
 $YoutubeConversionQueueName = "youtubeconversion";
 $AudioUploadingResultQueueName = "audiouploadingresult";
@@ -52,7 +41,7 @@ $ServerConfigParams = @{
     'ApplicationInsightsInstrumentationKey' = $ServerApplicationInsightsInstrumentationKey;
 };
 
-. $PSScriptRoot/../TestMusicAppServer/Scripts/Set-Config.ps1 @ServerConfigParams;
+& $PSScriptRoot/../TestMusicAppServer/Scripts/Set-Config.ps1 @ServerConfigParams;
 
 $ServicesConfigParams = @{
     'ServiceBusConnectionString' = $ServiceBusConnectionString;
@@ -66,4 +55,4 @@ $ServicesConfigParams = @{
     'YoutubeConverterInstrumentationKey' = $YoutubeConverterInstrumentationKey;
 };
 
-. $PSScriptRoot/../TestMusicAppServices/Scripts/Set-Config.ps1 @ServicesConfigParams;
+& $PSScriptRoot/../TestMusicAppServices/Scripts/Set-Config.ps1 @ServicesConfigParams;

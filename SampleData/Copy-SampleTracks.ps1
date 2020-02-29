@@ -1,13 +1,13 @@
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory=$False)]
-    [string]$SampleTracksSasToken,
+    [string]$SampleTracksSasToken = "?st=2020-01-01T00%3A00%3A00Z&se=2100-01-01T00%3A00%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=fZZdzAYurtG5IJS1J%2FJhlFvZZG%2BupmAv%2FPU5TkD8KqY%3D";,
 
     [Parameter(Mandatory=$False)]
-    [string]$SampleTracksStorageAccountName,
+    [string]$SampleTracksStorageAccountName = "testmusicapp",
 
     [Parameter(Mandatory=$False)]
-    [string]$SampleTracksContainerName,
+    [string]$SampleTracksContainerName = "sampletracks",
 
     [Parameter(Mandatory=$True)]
     [string]$DestinationStorageConnectionString,
@@ -19,18 +19,6 @@ Param (
 $ErrorActionPreference = "Stop";
 
 Import-Module Az.Storage;
-
-If (!$SampleTracksSasToken) {
-    $SampleTracksSasToken = "?st=2020-01-01T00%3A00%3A00Z&se=2100-01-01T00%3A00%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=fZZdzAYurtG5IJS1J%2FJhlFvZZG%2BupmAv%2FPU5TkD8KqY%3D";
-}
-
-If (!$SampleTracksStorageAccountName) {
-    $SampleTracksStorageAccountName = "testmusicapp";
-}
-
-If (!$SampleTracksContainerName) {
-    $SampleTracksContainerName = "sampletracks";
-}
 
 $SourceStorageContext = New-AzStorageContext -StorageAccountName $SampleTracksStorageAccountName -SasToken $SampleTracksSasToken;
 $DestinationStorageContext = New-AzStorageContext -ConnectionString $DestinationStorageConnectionString;
@@ -50,7 +38,7 @@ $TempDirectory = "Temp/SampleTracks";
 
 New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null;
 
-#Temp copy is used becvause copying directly from the Azure into local storage emulator didn't work for me
+#Temp copy is used because copying directly from the Azure into local storage emulator didn't work for me
 
 Write-Host "Receiving list of tracks";
 $Blobs = Get-AzStorageBlob -Container $SampleTracksContainerName -Context $SourceStorageContext;

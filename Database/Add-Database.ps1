@@ -1,14 +1,7 @@
-[CmdletBinding()]
-Param (
-    [Parameter(Mandatory=$True)]
-    [string]$ServerInstance,
-
-    [Parameter(Mandatory=$True)]
-    [string]$DatabaseName
-)
-
 Import-Module SqlServer;
 
+$ServerInstance = & "$PSScriptRoot/Get-ServerInstance.ps1";
+$DatabaseName = & "$PSScriptRoot/Get-DatabaseName.ps1"
 $Server = New-Object Microsoft.SqlServer.Management.Smo.Server($ServerInstance);
 
 $IsDatabaseExists = $False;

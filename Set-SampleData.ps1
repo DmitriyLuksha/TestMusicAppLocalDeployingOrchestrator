@@ -1,9 +1,6 @@
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory=$False)]
-    [string]$ServerInstance,
-
-    [Parameter(Mandatory=$False)]
     [string]$StorageConnectionString
 )
 
@@ -14,7 +11,7 @@ If (!$StorageConnectionString) {
 }
 
 $TracksStorageContainerName = "audiofiles";
-$DatabaseConnectionString = ./Database/Format-DatabaseConnectionString.ps1 -ServerInstance $ServerInstance;
+$DatabaseConnectionString = ./Database/Get-DatabaseConnectionString.ps1;
 
 ./SampleData/Copy-SampleTracks.ps1 -DestinationStorageConnectionString $StorageConnectionString -DestinationContainer $TracksStorageContainerName;
 ./SampleData/Set-TestSQLData -TracksStorageConnectionString $StorageConnectionString -TracksStorageContainerName $TracksStorageContainerName -DatabaseConnectionString $DatabaseConnectionString;
