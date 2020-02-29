@@ -18,7 +18,8 @@ New-Item -ItemType Directory -Path "Temp" -Force | Out-Null;
 
 ./Packages/Install-PowershellModules.ps1;
 ./Packages/Install-StorageEmulator.ps1;
-./Packages/Start-Executables.ps1;
+
+./Start-AllTools.ps1;
 
 ./Database/Add-Database.ps1;
 
