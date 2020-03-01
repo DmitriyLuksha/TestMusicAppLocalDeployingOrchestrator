@@ -5,3 +5,6 @@ Write-Host "Publishing database";
 
 Write-Host "Publishing server";
 & "$PSScriptRoot\..\TestMusicAppServer\Scripts\Publish-Server.ps1";
+
+Write-Host "Publishing services";
+& "$PSScriptRoot\..\TestMusicAppServices\Scripts\Publish-Services.ps1";
