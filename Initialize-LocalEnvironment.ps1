@@ -1,3 +1,8 @@
+<#
+.DESCRIPTION
+This script installs required tools and sets up required environment
+#>
+
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory=$False)]

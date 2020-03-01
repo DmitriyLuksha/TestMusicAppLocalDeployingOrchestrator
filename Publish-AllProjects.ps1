@@ -1,3 +1,8 @@
+<#
+.DESCRIPTION
+This script publishes all projects
+#>
+
 $ErrorActionPreference = "Stop";
 
 Write-Host "Publishing database";

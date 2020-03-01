@@ -1,3 +1,8 @@
+<#
+.DESCRIPTION
+This script deletes all existing data and replaces it with the test data set
+#>
+
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory=$False)]
@@ -7,7 +12,7 @@ Param (
 $ErrorActionPreference = "Stop";
 
 If (!$StorageConnectionString) {
-    $StorageConnectionString = "UseDevelopmentStorage=true"
+    $StorageConnectionString = "UseDevelopmentStorage=true";
 }
 
 $TracksStorageContainerName = "audiofiles";

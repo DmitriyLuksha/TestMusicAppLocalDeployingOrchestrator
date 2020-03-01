@@ -1,3 +1,8 @@
+<#
+.DESCRIPTION
+This script sets configs for all projects
+#>
+
 [CmdletBinding()]
 Param (
     [Parameter(Mandatory=$True)]
